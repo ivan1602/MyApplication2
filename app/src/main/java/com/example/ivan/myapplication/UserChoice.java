@@ -26,6 +26,7 @@ public class UserChoice extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
 
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null)
         {
