@@ -79,7 +79,7 @@ public class UserChoice extends AppCompatActivity{
 
         switch (id){
             case R.id.logout:
-                Parse.initialize(new Parse.Configuration.Builder(UserChoice.this).applicationId("1rYGdTn2AMtXPOPrVbnooFVmpC0EE0CNllTTC2xC").clientKey("o78lIY0qDURGlvmCPpO90G0sfR9KeRwSXsMaBIK1").build());
+                
 
                 //AppCompatPrefrenceActivity ne radi kako treba, treba popraviti!!!
                ParseUser.logOut();
