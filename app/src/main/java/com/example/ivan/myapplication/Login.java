@@ -31,7 +31,6 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Parse.initialize(new Parse.Configuration.Builder(Login.this).applicationId("1rYGdTn2AMtXPOPrVbnooFVmpC0EE0CNllTTC2xC").clientKey("o78lIY0qDURGlvmCPpO90G0sfR9KeRwSXsMaBIK1").build());
 
         //initialization
 
