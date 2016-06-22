@@ -18,7 +18,7 @@ import com.parse.Parse;
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
  * to be used with AppCompat.
  */
-public abstract class Logout extends PreferenceActivity {
+public abstract class AppCompatPrefrenceActivity extends PreferenceActivity {
 
     private AppCompatDelegate mDelegate;
 
