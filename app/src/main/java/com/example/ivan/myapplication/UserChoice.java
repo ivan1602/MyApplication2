@@ -12,11 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class UserChoice extends AppCompatActivity{
+
+    Button noviZahtjev, pregledZahtjeva, pracenje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,32 @@ public class UserChoice extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        noviZahtjev = (Button)findViewById(R.id.newZahtjev);
+        noviZahtjev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nZahtjevi = new Intent(UserChoice.this, NoviZahtjevi.class);
+                startActivity(nZahtjevi);
+            }
+        });
+
+        pregledZahtjeva = (Button)findViewById(R.id.odlZahtjevi);
+        pregledZahtjeva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent oZahtjevi = new Intent(UserChoice.this, PregledZahtjeva.class);
+                startActivity(oZahtjevi);
+            }
+        });
+
+        pracenje = (Button)findViewById(R.id.pracenje);
+        pracenje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent prati = new Intent(UserChoice.this, Pracenje.class);
+                startActivity(prati);
+            }
+        });
 
 
         ParseUser currentUser = ParseUser.getCurrentUser();

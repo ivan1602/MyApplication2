@@ -12,4 +12,31 @@
     tools:context="com.example.ivan.myapplication.UserChoice"
     tools:showIn="@layout/activity_user_choice">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kreiranje zahtjeva"
+        android:id="@+id/newZahtjev"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pregled prijašnjih putovanja"
+        android:id="@+id/odlZahtjevi"
+        android:layout_below="@+id/newZahtjev"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pokreni praćenje"
+        android:id="@+id/pracenje"
+        android:layout_below="@+id/odlZahtjevi"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:layout_marginTop="83dp" />
 </RelativeLayout>
