@@ -68,4 +68,8 @@
     <string name="title_activity_novi_zahtjevi">NoviZahtjevi</string>
     <string name="title_activity_pregled_zahtjeva">PregledZahtjeva</string>
     <string name="title_activity_pracenje">Pracenje</string>
+    <string name="title_activity_pokazi_na_karti">PokaziNaKarti</string>
+    <string name="title_activity_mapa">Mapa</string>
+    <string name="title_activity_pregled_baze">PregledBazeActivity</string>
+    <string name="title_activity_statistika_rute">StatistikaRute</string>
 </resources>
