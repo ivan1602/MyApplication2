@@ -30,7 +30,7 @@ public class PregledBazeActivity extends Activity {
 
         String imekorisnika = getSharedPreferences("postavke", Context.MODE_PRIVATE).getString("korisnik", "");
         DatabaseHandler baza= new DatabaseHandler(this);
-        baza.openDB();
+        //baza.openDB();
         final ArrayList<Ruta> listRuta= baza.sveRute(imekorisnika);
         baza.closeDB();
         ArrayList<String> list= new ArrayList<String>();

@@ -161,7 +161,7 @@ public class Mapa extends Activity {
     public void dodajRutuUBazu (String imerute){
         String imekorisnika = getSharedPreferences("postavke", Context.MODE_PRIVATE).getString("korisnik", "");
         DatabaseHandler baza = new DatabaseHandler(this);
-        baza.openDB();
+        //baza.openDB();
         int id = baza.DodajRutu(imekorisnika, imerute);
         baza.closeDB();
         Intent i = new Intent(Mapa.this, Prati.class);

@@ -49,7 +49,7 @@ public class PokaziNaKarti extends Activity {
 
     private void PokaziRutu() {
         DatabaseHandler baza= new DatabaseHandler(this);
-        baza.openDB();
+        //baza.openDB();
         ArrayList<Koordinate> listRuta= baza.DohvatiKoordinate(idRute);
         baza.closeDB();
         ArrayList<LatLng> list= new ArrayList<LatLng>();

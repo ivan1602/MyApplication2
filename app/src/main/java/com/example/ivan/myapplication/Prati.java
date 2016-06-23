@@ -55,7 +55,7 @@ public class Prati extends Service implements LocationListener{
 
     @Override
     public void onDestroy() {
-        stopUsingGPS ();
+        //stopUsingGPS();
         super.onDestroy();
     }
 
@@ -194,7 +194,7 @@ public class Prati extends Service implements LocationListener{
         intent.setAction(INTENT_ACTION);
         intent.putParcelableArrayListExtra("lokacija",routePoints);
         sendBroadcast(intent);
-        baza.openDB();
+        //baza.openDB();
         baza.DodajKoordinate(idrute, lat, lng);
         baza.closeDB();
         Log.d("nova lokacija prati", "nova lokacija");
