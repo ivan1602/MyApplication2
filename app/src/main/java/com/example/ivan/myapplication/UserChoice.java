@@ -50,7 +50,7 @@ public class UserChoice extends AppCompatActivity{
         pracenje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent prati = new Intent(UserChoice.this, Prati.class);
+                Intent prati = new Intent(UserChoice.this, Pracenje.class);
                 startActivity(prati);
             }
         });
@@ -81,6 +81,7 @@ public class UserChoice extends AppCompatActivity{
             case R.id.logout:
                 
 
+                //AppCompatPrefrenceActivity ne radi kako treba, treba popraviti!!!
                ParseUser.logOut();
                Intent getUserToLogin = new Intent(this, Login.class);
                startActivity(getUserToLogin);
