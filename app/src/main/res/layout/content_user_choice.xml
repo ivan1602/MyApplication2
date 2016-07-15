@@ -11,7 +11,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ivan.myapplication.UserChoice"
     tools:showIn="@layout/activity_user_choice">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,16 +24,17 @@
         android:id="@+id/newZahtjev"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp" />
+        android:layout_weight="0.25"  />
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pregled prijašnjih putovanja"
         android:id="@+id/odlZahtjevi"
-        android:layout_below="@+id/newZahtjev"
+        android:layout_below="@+id/Putninalog"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_weight="0.25" />
 
     <Button
         android:layout_width="match_parent"
@@ -38,5 +44,16 @@
         android:layout_below="@+id/odlZahtjevi"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2"
-        android:layout_marginTop="83dp" />
+        android:layout_weight="0.25" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Predaj putni nalog"
+        android:id="@+id/Putninalog"
+        android:layout_below="@+id/newZahtjev"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="0.25" />
+    </LinearLayout>
+
 </RelativeLayout>

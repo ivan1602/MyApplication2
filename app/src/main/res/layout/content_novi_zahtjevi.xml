@@ -11,21 +11,196 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ivan.myapplication.NoviZahtjevi"
     tools:showIn="@layout/activity_novi_zahtjevi">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_centerHorizontal="true" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="99dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="35dp"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stručna aktivnost"
+                android:id="@+id/Strucna_aktivnost" />
+
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nastavna aktivnost"
+                android:id="@+id/Nastavna_aktivnost"
+                android:checked="false" />
+
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Ime"
+                android:ems="10"
+                android:id="@+id/Ime"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Prezime"
+                android:ems="10"
+                android:id="@+id/Prezime"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Radno_mjesto"
+            android:hint="Radno mjesto" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05">
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Mjesto_putovanja"
+                android:layout_weight="1"
+                android:hint="Mjesto putovanja"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Voditelj_projekta"
+                android:layout_weight="1"
+                android:hint="Voditelj projekta"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05">
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/Datum_polaska"
+                android:layout_weight="1"
+                android:hint="Datum polaska"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:id="@+id/Vrijeme_polaska"
+                android:layout_weight="1"
+                android:hint="Vrijeme polaska"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05">
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/Datum_povratka"
+                android:layout_weight="1"
+                android:hint="Datum povratka"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:id="@+id/Vrijeme_povratka"
+                android:layout_weight="1"
+                android:hint="Vrijeme povratka"/>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Akontacija"
+            android:layout_weight="0.05"
+            android:hint="Akontacija"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Opis_aktivnosti"
+            android:layout_weight="0.05"
+            android:hint="Opis aktivnosti"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Vrsta_prijevoza"
+            android:layout_weight="0.05"
+            android:hint="Vrsta prijevoza"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Troskovi"
+            android:layout_weight="0.05"
+            android:hint="Troškovi terete"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Obrazlozenje"
+            android:layout_weight="0.05"
+            android:hint="Obrazloženje"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Podnositelj"
+            android:layout_weight="0.05"
+            android:hint="Podnositelj zahtjeva"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Predaj zahtjev"
+            android:id="@+id/Predaj"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>
