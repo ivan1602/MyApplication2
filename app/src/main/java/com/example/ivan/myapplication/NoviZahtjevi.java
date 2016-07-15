@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
 public class NoviZahtjevi extends AppCompatActivity {
 
     Zahtjev noviZahtjev;
@@ -51,7 +54,35 @@ public class NoviZahtjevi extends AppCompatActivity {
         obrazlozenje = (EditText)findViewById(R.id.Obrazlozenje);
         podnositelj = (EditText)findViewById(R.id.Podnositelj);
 
+
+
+
+
+
         predaj = (Button)findViewById(R.id.Predaj);
+        predaj.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(final View v) {
+            noviZahtjev = new Zahtjev();
+                noviZahtjev.setIme(ime.getText().toString());
+                noviZahtjev.setPrezime(prezime.getText().toString());
+                //nastaviti za ostale atribute objekta
+                noviZahtjev.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e==null){
+                            Snackbar.make(v,"Uspješno spremljeno",Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            Snackbar.make(v,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
+
+
+            }
+        });
 
 
 

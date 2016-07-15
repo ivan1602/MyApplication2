@@ -1,10 +1,14 @@
 package com.example.ivan.myapplication;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by Ivan on 15.7.2016..
  */
-public class Zahtjev {
-    String aktivnost;
+@ParseClassName("Zahtjev")
+public class Zahtjev extends ParseObject{
+    String aktivnost="aktivnost";
     String Ime;
     String Prezime;
     String Rmjesto;
@@ -20,6 +24,9 @@ public class Zahtjev {
     String Troskovi;
     String Obrazlozenje;
     String Podnositelj;
+
+    public Zahtjev() {
+    }
 
     public Zahtjev(String aktivnost, String ime, String prezime, String rmjesto, String mjPutovanja, String VProjekta, String DPolaska, String VPolaska, String DPovratka, String VPovratka, String akontacija, String OAktivnosti, String VPrijevoza, String troskovi, String obrazlozenje, String podnositelj) {
         this.aktivnost = aktivnost;
@@ -41,27 +48,27 @@ public class Zahtjev {
     }
 
     public String getAktivnost() {
-        return aktivnost;
+        return getString(aktivnost);
     }
 
     public void setAktivnost(String aktivnost) {
-        this.aktivnost = aktivnost;
+        put(this.aktivnost,aktivnost);
     }
 
     public String getIme() {
-        return Ime;
+        return getString("ime");
     }
 
     public void setIme(String ime) {
-        Ime = ime;
+        put("ime",ime);
     }
 
     public String getPrezime() {
-        return Prezime;
+        return getString("prezime");
     }
 
     public void setPrezime(String prezime) {
-        Prezime = prezime;
+        put("prezime",prezime);
     }
 
     public String getRmjesto() {
@@ -166,5 +173,13 @@ public class Zahtjev {
 
     public void setPodnositelj(String podnositelj) {
         Podnositelj = podnositelj;
+    }
+
+    @Override
+    public String toString() {
+        return "Zahtjev{" +
+                "Ime='" + getIme() + '\'' +
+                ", Prezime='" + getPrezime() + '\'' +
+                '}';
     }
 }

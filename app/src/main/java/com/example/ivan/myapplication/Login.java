@@ -38,7 +38,10 @@ public class Login extends Activity {
         mPassword = (EditText)findViewById(R.id.UserPass);
         mLogin = (Button)findViewById(R.id.LoginBtn);
         mCreateAccount = (Button)findViewById(R.id.RegisterBtn);
-
+        if(ParseUser.getCurrentUser()!=null){
+            Intent takeUserHome = new Intent(Login.this, UserChoice.class);
+            startActivity(takeUserHome);
+        }
         //listen when the mLogin button is clicked
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
