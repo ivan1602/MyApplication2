@@ -16,7 +16,7 @@ public class Zahtjev extends BaseModel{
     String VProjekta="vprojekta";
     String DPolaska="dpolaska";
     String VPolaska="vpolaska";
-    String DPovratka="dpolaska";
+    String DPovratka="dpovratka";
     String VPovratka="vpovratka";
     String Akontacija="akontacija";
     String OAktivnosti="oaktivnosti";
@@ -71,96 +71,97 @@ public class Zahtjev extends BaseModel{
         return getString( VProjekta);
     }
 
-    public void setVProjekta(String vProjekta)
+    public void setVProjekta(String vprojekta)
     {
-       put(this.VProjekta,vProjekta);
+       put(VProjekta,vprojekta);
     }
 
     public String getDPolaska() {
         return getString (DPolaska);
     }
 
-    public void setDPolaska(String DPolaska) {
-       put (this.DPolaska, DPolaska);
-    }
+    public void setDPolaska(String dpolaska) {
+       put (DPolaska, dpolaska);
+            }
 
     public String getVPolaska() {
        return getString (VPolaska);
     }
 
-    public void setVPolaska(String VPolaska) {
-        this.VPolaska = VPolaska;
+    public void setVPolaska(String vpolaska)
+    {
+        put(VPolaska, vpolaska);
     }
 
     public String getDPovratka() {
-        return DPovratka;
+        return getString(DPovratka);
     }
 
-    public void setDPovratka(String DPovratka) {
-        this.DPovratka = DPovratka;
+    public void setDPovratka(String dpovratka)
+    {
+        put (DPovratka, dpovratka);
     }
 
     public String getVPovratka() {
-        return VPovratka;
+        return getString( VPovratka) ;
     }
 
-    public void setVPovratka(String VPovratka) {
-        this.VPovratka = VPovratka;
+    public void setVPovratka(String vpovratka)
+    {
+        put (VPovratka , vpovratka);
     }
 
     public String getAkontacija() {
-        return Akontacija;
+        return getString (Akontacija);
     }
 
     public void setAkontacija(String akontacija) {
-        Akontacija = akontacija;
+       put  (Akontacija, akontacija);
     }
 
     public String getOAktivnosti() {
-        return OAktivnosti;
+        return getString (OAktivnosti);
     }
 
-    public void setOAktivnosti(String OAktivnosti) {
-        this.OAktivnosti = OAktivnosti;
+    public void setOAktivnosti(String oaktivnosti) {
+        put (OAktivnosti, oaktivnosti);
     }
 
     public String getVPrijevoza() {
-        return VPrijevoza;
+        return getString( VPrijevoza);
     }
 
-    public void setVPrijevoza(String VPrijevoza) {
-        this.VPrijevoza = VPrijevoza;
+    public void setVPrijevoza(String vprijevoza) {
+        put (VPrijevoza, vprijevoza);
     }
 
     public String getTroskovi() {
-        return Troskovi;
+        return getString(Troskovi);
     }
 
     public void setTroskovi(String troskovi) {
-        Troskovi = troskovi;
+       put (Troskovi ,troskovi);
     }
 
     public String getObrazlozenje() {
-        return Obrazlozenje;
+        return getString (Obrazlozenje);
     }
 
     public void setObrazlozenje(String obrazlozenje) {
-        Obrazlozenje = obrazlozenje;
+       put (Obrazlozenje , obrazlozenje);
     }
 
     public String getPodnositelj() {
-        return Podnositelj;
+        return getString(Podnositelj);
     }
 
     public void setPodnositelj(String podnositelj) {
-        Podnositelj = podnositelj;
+       put (Podnositelj, podnositelj);
     }
 
     @Override
     public String toString() {
-        return "Zahtjev{" +
-                "Ime='" + getIme() + '\'' +
-                ", Prezime='" + getPrezime() + '\'' +
-                '}';
+        return "Mjesto putovanja:" + getMjPutovanja() + '\'' +
+                ", Datum:" + getDPolaska() + '\'';
     }
 }

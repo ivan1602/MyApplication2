@@ -1,11 +1,13 @@
 package com.example.ivan.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class PregledZahtjeva extends AppCompatActivity {
 
     ListView listViewPregledZahtjeva;
+    List<Zahtjev> listZahtjeva;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +44,24 @@ public class PregledZahtjeva extends AppCompatActivity {
         query.findInBackground(new FindCallback<Zahtjev>() {
             @Override
             public void done(List<Zahtjev> objects, ParseException e) {
-
+                listZahtjeva=objects;
                 ArrayAdapter<Zahtjev> adapter = new ArrayAdapter<Zahtjev>(PregledZahtjeva.this,
                         android.R.layout.simple_list_item_1, android.R.id.text1,objects);
                 listViewPregledZahtjeva.setAdapter(adapter);
             }
         });
 
+        listViewPregledZahtjeva.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(listZahtjeva!=null){
+                    Zahtjev zahtjev=listZahtjeva.get(position);
+                    Intent i = new Intent(PregledZahtjeva.this,ZahtjevIKarta.class);
+                    i.putExtra("idZahtjeva",zahtjev.getObjectId());
+                    startActivity(i);
+                }
+            }
+        });
     }
 
 }

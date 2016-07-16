@@ -4,17 +4,20 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Nadzor Sluzbenih Putovanja"
-        android:name=".App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAPswI7vXdRRCkRCacTXLSugXi6QJa-NNE"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAPswI7vXdRRCkRCacTXLSugXi6QJa-NNE" />
+
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +38,10 @@
             android:label="@string/title_activity_about_this_app"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".PokaziNaKarti"
+            android:label="Prikaz"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".NoviZahtjevi"
             android:label="@string/title_activity_novi_zahtjevi"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -45,15 +52,22 @@
         <activity
             android:name=".Pracenje"
             android:label="@string/title_activity_pracenje"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Mapa"
             android:label=".Mapa"
             android:theme="@style/AppTheme.NoActionBar" />
-        <receiver android:name=".Mapa$ReciveKoord" >
-        </receiver>
-        <service android:enabled="true" android:name=".Prati" />
-    </application>
 
+        <receiver android:name=".Mapa$ReciveKoord"></receiver>
+
+        <service
+            android:name=".Prati"
+            android:enabled="true" />
+
+        <activity
+            android:name=".ZahtjevIKarta"
+            android:label="@string/title_activity_zahtjev_ikarta"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
 
 </manifest>

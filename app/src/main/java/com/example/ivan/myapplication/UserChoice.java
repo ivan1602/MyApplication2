@@ -22,7 +22,7 @@ import com.parse.ParseUser;
 
 public class UserChoice extends AppCompatActivity{
 
-    Button noviZahtjev, pregledZahtjeva, pracenje;
+    Button noviZahtjev, pregledZahtjeva, pracenje,pregledPutnihNaloga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,14 @@ public class UserChoice extends AppCompatActivity{
             }
         });
 
-
+        pregledPutnihNaloga = (Button) findViewById(R.id.Putninalog);
+        pregledPutnihNaloga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pokazi = new Intent(UserChoice.this, PokaziNaKarti.class);
+                startActivity(pokazi);
+            }
+        });
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null)
         {
@@ -89,7 +96,6 @@ public class UserChoice extends AppCompatActivity{
             case R.id.logout:
                 
 
-                //AppCompatPrefrenceActivity ne radi kako treba, treba popraviti!!!
                ParseUser.logOut();
                Intent getUserToLogin = new Intent(this, Login.class);
                startActivity(getUserToLogin);
