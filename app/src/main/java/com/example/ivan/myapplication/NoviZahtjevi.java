@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ivan.myapplication.model.Zahtjev;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
@@ -67,7 +68,7 @@ public class NoviZahtjevi extends AppCompatActivity {
                 noviZahtjev.setIme(ime.getText().toString());
                 noviZahtjev.setPrezime(prezime.getText().toString());
                 //nastaviti za ostale atribute objekta
-                noviZahtjev.saveInBackground(new SaveCallback() {
+                noviZahtjev.spremi(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if(e==null){

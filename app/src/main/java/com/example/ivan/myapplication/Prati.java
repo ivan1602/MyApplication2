@@ -3,18 +3,30 @@ package com.example.ivan.myapplication;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.provider.Settings;
 import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
+
+import com.example.ivan.myapplication.model.Koordinate;
+import com.example.ivan.myapplication.model.Ruta;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 
 /**
@@ -37,17 +49,17 @@ public class Prati extends Service implements LocationListener{
     double latitude; // latitude
     double longitude; // longitude
 
-    int idrute;
+    String idrute;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 0 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 0 ; // 5 seconds
+    private static final long MIN_TIME_BW_UPDATES = 2000 ; // 5 seconds
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
-    DatabaseHandler baza;
+
     public Prati ()
     {
 
@@ -59,13 +71,23 @@ public class Prati extends Service implements LocationListener{
         super.onDestroy();
     }
 
-
+private Ruta ruta;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        idrute = intent.getExtras().getInt("id rute");
-        routePoints= new ArrayList<LatLng>();
-        baza=new DatabaseHandler(this);
-        getLocation();
+        idrute = intent.getExtras().getString("id_rute");
+        routePoints = new ArrayList<LatLng>();
+        ParseQuery<Ruta> rutaQuery=ParseQuery.getQuery(Ruta.class);
+        rutaQuery.getInBackground(idrute, new GetCallback<Ruta>() {
+            @Override
+            public void done(Ruta object, ParseException e) {
+                if(e==null){
+                    ruta=object;
+                    getLocation();
+                }
+            }
+        });
+
+
         return Service.START_STICKY;
     }
 
@@ -86,6 +108,12 @@ public class Prati extends Service implements LocationListener{
             }
             else
             {
+                if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+                    stopSelf();
+                }
+
+
                 this.canGetLocation = true;
                 if (isNetworkEnabled)
                 {
@@ -190,13 +218,15 @@ public class Prati extends Service implements LocationListener{
 
     private void sendLocation(double lat, double lng){
         routePoints.add(new LatLng(lat,lng));
+        Koordinate koor= new Koordinate();
+        koor.setLat(lat);
+        koor.setLng(lng);
+        koor.setId_rute(ruta);
+        koor.saveEventually();
         Intent intent = new Intent();
         intent.setAction(INTENT_ACTION);
         intent.putParcelableArrayListExtra("lokacija",routePoints);
         sendBroadcast(intent);
-        //baza.openDB();
-        baza.DodajKoordinate(idrute, lat, lng);
-        baza.closeDB();
         Log.d("nova lokacija prati", "nova lokacija");
     }
 

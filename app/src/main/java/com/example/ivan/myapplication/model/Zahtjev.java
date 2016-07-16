@@ -1,4 +1,4 @@
-package com.example.ivan.myapplication;
+package com.example.ivan.myapplication.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -7,104 +7,85 @@ import com.parse.ParseObject;
  * Created by Ivan on 15.7.2016..
  */
 @ParseClassName("Zahtjev")
-public class Zahtjev extends ParseObject{
-    String aktivnost="aktivnost";
-    String Ime;
-    String Prezime;
-    String Rmjesto;
-    String MjPutovanja;
-    String VProjekta;
-    String DPolaska;
-    String VPolaska;
-    String DPovratka;
-    String VPovratka;
-    String Akontacija;
-    String OAktivnosti;
-    String VPrijevoza;
-    String Troskovi;
-    String Obrazlozenje;
-    String Podnositelj;
+public class Zahtjev extends BaseModel{
+
+    String Ime="ime";
+    String Prezime="prezime";
+    String Rmjesto="rmjesto";
+    String MjPutovanja="mjputovanja";
+    String VProjekta="vprojekta";
+    String DPolaska="dpolaska";
+    String VPolaska="vpolaska";
+    String DPovratka="dpolaska";
+    String VPovratka="vpovratka";
+    String Akontacija="akontacija";
+    String OAktivnosti="oaktivnosti";
+    String VPrijevoza="vprijevoza";
+    String Troskovi="troskovi";
+    String Obrazlozenje="obrazlozenje";
+    String Podnositelj="podnositelj";
 
     public Zahtjev() {
-    }
 
-    public Zahtjev(String aktivnost, String ime, String prezime, String rmjesto, String mjPutovanja, String VProjekta, String DPolaska, String VPolaska, String DPovratka, String VPovratka, String akontacija, String OAktivnosti, String VPrijevoza, String troskovi, String obrazlozenje, String podnositelj) {
-        this.aktivnost = aktivnost;
-        Ime = ime;
-        Prezime = prezime;
-        Rmjesto = rmjesto;
-        MjPutovanja = mjPutovanja;
-        this.VProjekta = VProjekta;
-        this.DPolaska = DPolaska;
-        this.VPolaska = VPolaska;
-        this.DPovratka = DPovratka;
-        this.VPovratka = VPovratka;
-        Akontacija = akontacija;
-        this.OAktivnosti = OAktivnosti;
-        this.VPrijevoza = VPrijevoza;
-        Troskovi = troskovi;
-        Obrazlozenje = obrazlozenje;
-        Podnositelj = podnositelj;
-    }
 
-    public String getAktivnost() {
-        return getString(aktivnost);
-    }
+       }
 
-    public void setAktivnost(String aktivnost) {
-        put(this.aktivnost,aktivnost);
-    }
 
-    public String getIme() {
-        return getString("ime");
+
+    public String getIme()
+    {
+        return getString(Ime);
     }
 
     public void setIme(String ime) {
-        put("ime",ime);
+        put(Ime,ime);
     }
 
-    public String getPrezime() {
-        return getString("prezime");
+    public String getPrezime()
+    {
+        return getString(Prezime);
     }
 
-    public void setPrezime(String prezime) {
-        put("prezime",prezime);
+    public void setPrezime(String prezime)
+    {
+        put(Prezime,prezime);
     }
 
-    public String getRmjesto() {
-        return Rmjesto;
+    public String getRmjesto()
+    {  return getString(Rmjesto);
     }
 
     public void setRmjesto(String rmjesto) {
-        Rmjesto = rmjesto;
+       put( Rmjesto, rmjesto);
     }
 
     public String getMjPutovanja() {
-        return MjPutovanja;
+        return getString(MjPutovanja);
     }
 
-    public void setMjPutovanja(String mjPutovanja) {
-        MjPutovanja = mjPutovanja;
+    public void setMjPutovanja(String mjputovanja) {
+        put (MjPutovanja, mjputovanja);
     }
 
     public String getVProjekta() {
-        return VProjekta;
+        return getString( VProjekta);
     }
 
-    public void setVProjekta(String VProjekta) {
-        this.VProjekta = VProjekta;
+    public void setVProjekta(String vProjekta)
+    {
+       put(this.VProjekta,vProjekta);
     }
 
     public String getDPolaska() {
-        return DPolaska;
+        return getString (DPolaska);
     }
 
     public void setDPolaska(String DPolaska) {
-        this.DPolaska = DPolaska;
+       put (this.DPolaska, DPolaska);
     }
 
     public String getVPolaska() {
-        return VPolaska;
+       return getString (VPolaska);
     }
 
     public void setVPolaska(String VPolaska) {

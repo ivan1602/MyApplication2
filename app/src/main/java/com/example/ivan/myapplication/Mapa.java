@@ -10,8 +10,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ivan.myapplication.model.Ruta;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -27,6 +31,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class Mapa extends Activity {
     private GoogleMap map;
@@ -64,6 +70,7 @@ public class Mapa extends Activity {
         routePoints = new ArrayList<LatLng>();
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
                 .getMap();
+
         if (map != null) {
             setUpMap();
         }
@@ -100,8 +107,15 @@ public class Mapa extends Activity {
         this.registerReceiver(rcv, inf);
         }
     private void setUpMap() {
-        map.setMyLocationEnabled(true);
-        map.animateCamera(CameraUpdateFactory.zoomTo(10));
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },0 );
+        }
+        else {
+
+            map.setMyLocationEnabled(true);
+            map.animateCamera(CameraUpdateFactory.zoomTo(10));
+        }
     }
     private void updateRoute() {
         PolylineOptions p = new PolylineOptions().width(3).color(0xFFEE8888);
@@ -111,7 +125,7 @@ public class Mapa extends Activity {
         map.addPolyline(p);
     }
 
-    private class ReciveKoord extends BroadcastReceiver {
+    public class ReciveKoord extends BroadcastReceiver {
         @Override
         public void onReceive(Context arg0, Intent intent) {
             if (intent.getAction().equals(Prati.INTENT_ACTION)) {
@@ -159,13 +173,16 @@ public class Mapa extends Activity {
 
     }
     public void dodajRutuUBazu (String imerute){
-        String imekorisnika = getSharedPreferences("postavke", Context.MODE_PRIVATE).getString("korisnik", "");
-        DatabaseHandler baza = new DatabaseHandler(this);
-        //baza.openDB();
-        int id = baza.DodajRutu(imekorisnika, imerute);
-        baza.closeDB();
-        Intent i = new Intent(Mapa.this, Prati.class);
-        i.putExtra("id rute", id);
-        startService(i);
+        final Ruta ruta = new Ruta();
+        ruta.setImeRute(imerute);
+        ruta.spremi(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Intent i = new Intent(Mapa.this, Prati.class);
+                i.putExtra("id_rute", ruta.getObjectId());
+                startService(i);
+            }
+        });
+
     }
 }

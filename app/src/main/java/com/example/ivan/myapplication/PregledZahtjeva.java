@@ -8,11 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.ivan.myapplication.model.Zahtjev;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class PregledZahtjeva extends AppCompatActivity {
                 listViewPregledZahtjeva.setAdapter(adapter);
             }
         });
+
     }
 
 }

@@ -61,6 +61,7 @@ public class Login extends Activity {
                                 //take user to the homepage
                                 Intent takeUserHome = new Intent(Login.this, UserChoice.class);
                                 startActivity(takeUserHome);
+                            finish();
 
                         } else {
                             //there was a problem during logging
@@ -85,6 +86,7 @@ public class Login extends Activity {
             public void onClick(View v) {
                 Intent registerUser = new Intent(Login.this, RegisterPage.class);
                 startActivity(registerUser);
+
             }
         });
     }

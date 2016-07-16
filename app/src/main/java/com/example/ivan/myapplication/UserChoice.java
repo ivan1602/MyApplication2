@@ -1,9 +1,12 @@
 package com.example.ivan.myapplication;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +31,11 @@ public class UserChoice extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },0 );
+        }
+
         noviZahtjev = (Button)findViewById(R.id.newZahtjev);
         noviZahtjev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +58,7 @@ public class UserChoice extends AppCompatActivity{
         pracenje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent prati = new Intent(UserChoice.this, Pracenje.class);
+                Intent prati = new Intent(UserChoice.this, Mapa.class);
                 startActivity(prati);
             }
         });

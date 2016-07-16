@@ -3,14 +3,10 @@ package com.example.ivan.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdate;
+import com.example.ivan.myapplication.model.Koordinate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -48,22 +44,22 @@ public class PokaziNaKarti extends Activity {
     }
 
     private void PokaziRutu() {
-        DatabaseHandler baza= new DatabaseHandler(this);
-        //baza.openDB();
-        ArrayList<Koordinate> listRuta= baza.DohvatiKoordinate(idRute);
-        baza.closeDB();
-        ArrayList<LatLng> list= new ArrayList<LatLng>();
-        for (Koordinate k:listRuta){
-            list.add(new LatLng(k.getLat(), k.getLng()));
-        }
+//        DatabaseHandler baza= new DatabaseHandler(this);
+//        //baza.openDB();
+//        ArrayList<Koordinate> listRuta= baza.DohvatiKoordinate(idRute);
+//        baza.closeDB();
+//        ArrayList<LatLng> list= new ArrayList<LatLng>();
+//        for (Koordinate k:listRuta){
+//            list.add(new LatLng(k.getLat(), k.getLng()));
+//        }
         PolylineOptions p = new PolylineOptions().width(3).color(0xFFEE8888);
-        p.addAll(list);
+//        p.addAll(list);
         map.addPolyline(p);
         map.setMyLocationEnabled(false);
-        map.moveCamera(CameraUpdateFactory.newLatLng(list.get(list.size()-1)));
+//        map.moveCamera(CameraUpdateFactory.newLatLng(list.get(list.size()-1)));
         map.animateCamera(CameraUpdateFactory.zoomTo(15));
-        map.addMarker(new MarkerOptions().position(list.isEmpty()?null:list.get(0)).title("Start"));
-        map.addMarker(new MarkerOptions().position(list.isEmpty()?null:list.get(list.size()-1)).title("End"));
+//        map.addMarker(new MarkerOptions().position(list.isEmpty()?null:list.get(0)).title("Start"));
+//        map.addMarker(new MarkerOptions().position(list.isEmpty()?null:list.get(list.size()-1)).title("End"));
 
     }
 
