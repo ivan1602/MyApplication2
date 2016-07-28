@@ -26,6 +26,8 @@ public class ZahtjevIKarta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pregled_zahtjeva_rute);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Ime = (TextView)findViewById(R.id.Name);
         Prezime = (TextView)findViewById(R.id.Lastname);

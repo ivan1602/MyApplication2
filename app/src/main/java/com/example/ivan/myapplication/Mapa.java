@@ -15,6 +15,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -34,7 +36,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
-public class Mapa extends Activity {
+public class Mapa extends AppCompatActivity {
     private GoogleMap map;
     ArrayList<LatLng> routePoints;
     BroadcastReceiver rcv;
@@ -66,6 +68,8 @@ public class Mapa extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         routePoints = new ArrayList<LatLng>();
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
