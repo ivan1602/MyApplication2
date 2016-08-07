@@ -29,7 +29,7 @@ public class ZahtjevIKarta extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Aktivnost = (TextView)findViewById(R.id.Aktivnost);
+       // Aktivnost = (TextView)findViewById(R.id.Aktivnost);
         Ime = (TextView)findViewById(R.id.Name);
         Prezime = (TextView)findViewById(R.id.Lastname);
         RMjesto = (TextView)findViewById(R.id.WorkPlace);
@@ -45,7 +45,7 @@ public class ZahtjevIKarta extends AppCompatActivity {
         TTerete =(TextView)findViewById(R.id.Expenses);
         Obrazlozenje =(TextView)findViewById(R.id.Description);
         PZahtjeva = (TextView)findViewById(R.id.Person);
-        Odobrio = (TextView)findViewById(R.id.Approved);
+       // Odobrio = (TextView)findViewById(R.id.Approved);
 
         pregledKarte = (Button)findViewById(R.id.PregledKarte);
         pregledKarte.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class ZahtjevIKarta extends AppCompatActivity {
     }
 
     private void setValues(Zahtjev z) {
-        Aktivnost.setText(z.getVAktiv());
+        //Aktivnost.setText(z.getVAktiv());
         Ime.setText(z.getIme());
         Prezime.setText(z.getPrezime());
         RMjesto.setText(z.getRmjesto());
@@ -83,7 +83,7 @@ public class ZahtjevIKarta extends AppCompatActivity {
         TTerete.setText(z.getTroskovi());
         Obrazlozenje.setText(z.getObrazlozenje());
         PZahtjeva.setText(z.getPodnositelj());
-        Odobrio.setText(z.getOdobrio());
+       // Odobrio.setText(z.getOdobrio());
 
 
     }
