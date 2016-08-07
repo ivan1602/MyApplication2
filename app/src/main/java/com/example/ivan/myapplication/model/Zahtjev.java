@@ -1,5 +1,6 @@
 package com.example.ivan.myapplication.model;
 
+import com.google.android.gms.nearby.connection.Strategy;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -9,6 +10,8 @@ import com.parse.ParseObject;
 @ParseClassName("Zahtjev")
 public class Zahtjev extends BaseModel{
 
+
+    String VAktiv = "vaktivnosti";
     String Ime="ime";
     String Prezime="prezime";
     String Rmjesto="rmjesto";
@@ -24,13 +27,22 @@ public class Zahtjev extends BaseModel{
     String Troskovi="troskovi";
     String Obrazlozenje="obrazlozenje";
     String Podnositelj="podnositelj";
+    String Odobrio = "odobrio";
+
+
 
     public Zahtjev() {
 
 
        }
 
+    public String getVAktiv() {
+        return  getString (VAktiv);
+    }
 
+    public void setVAktiv(String vaktivnosti) {
+        put (VAktiv, vaktivnosti);
+    }
 
     public String getIme()
     {
@@ -157,6 +169,12 @@ public class Zahtjev extends BaseModel{
 
     public void setPodnositelj(String podnositelj) {
        put (Podnositelj, podnositelj);
+    }
+
+    public String getOdobrio () {return getString (Odobrio);    }
+
+    public void setOdobrio(String odobrio) {
+       put (Odobrio, odobrio);
     }
 
     @Override

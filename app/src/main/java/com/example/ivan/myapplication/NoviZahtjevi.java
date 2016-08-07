@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.ivan.myapplication.model.Zahtjev;
 import com.parse.ParseException;
@@ -16,6 +18,9 @@ import com.parse.SaveCallback;
 public class NoviZahtjevi extends AppCompatActivity {
 
     Zahtjev noviZahtjev;
+
+    RadioGroup rg;
+    RadioButton btn1;
 
     EditText ime, prezime, rmjesto, mputovanja, vprojekta, datumPol, vrijemePol, datumPovr, vrijemePovr;
     EditText akontacija, vprijevoza, oaktivnosti, troskovi, obrazlozenje, podnositelj;
@@ -29,11 +34,12 @@ public class NoviZahtjevi extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        rg = (RadioGroup)findViewById(R.id.vrsta_aktivnosti);
+
+
 
 
         ime = (EditText) findViewById(R.id.Ime);
-        String imeK = ime.getText().toString();
-
         prezime = (EditText) findViewById(R.id.Prezime);
         rmjesto = (EditText) findViewById(R.id.Radno_mjesto);
         mputovanja = (EditText) findViewById(R.id.Mjesto_putovanja);
@@ -55,6 +61,10 @@ public class NoviZahtjevi extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 noviZahtjev = new Zahtjev();
+                int selectedId = rg.getCheckedRadioButtonId();
+                btn1 = (RadioButton)findViewById(selectedId);
+                btn1.getText();
+                noviZahtjev.setVAktiv(btn1.getText().toString());
                 noviZahtjev.setIme(ime.getText().toString());
                 noviZahtjev.setPrezime(prezime.getText().toString());
                 noviZahtjev.setMjPutovanja(mputovanja.getText().toString());
@@ -68,7 +78,7 @@ public class NoviZahtjevi extends AppCompatActivity {
                 noviZahtjev.setTroskovi(troskovi.getText().toString());
                 noviZahtjev.setObrazlozenje(obrazlozenje.getText().toString());
                 noviZahtjev.setPodnositelj(podnositelj.getText().toString());
-                //nastaviti za ostale atribute objekta
+
                 noviZahtjev.spremi(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

@@ -29,6 +29,7 @@
         android:id="@+id/linearLayout">
 
         <RadioGroup
+            android:id="@+id/vrsta_aktivnosti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -36,7 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stručna aktivnost"
-                android:id="@+id/Strucna_aktivnost" />
+                android:id="@+id/Strucna_aktivnost"
+                android:checked="true"
+                />
 
 
         <RadioButton
