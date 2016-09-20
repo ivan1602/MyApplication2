@@ -1,6 +1,6 @@
 package com.example.ivan.myapplication.model;
 
-import com.google.android.gms.nearby.connection.Strategy;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 

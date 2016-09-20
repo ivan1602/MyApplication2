@@ -10,9 +10,9 @@ import java.util.Date;
  */
 @ParseClassName("Ruta")
 public class Ruta extends BaseModel {
-    public static final String KEY_IME_RUTE = "ime_rute";
     public static final String KEY_START_RUTE = "startRuteTime";
     public static final String KEY_STOP_RUTE = "stopRuteTime";
+    public static final String KEY_ZAHTJEV = "zahtjev";
 
 
     public Date getStartRute() {
@@ -28,12 +28,10 @@ public class Ruta extends BaseModel {
         return getDate(KEY_STOP_RUTE);
     }
 
-    public String getImeRute() {
-        return getString(KEY_IME_RUTE);
-    }
-    public void setImeRute(String ime_rute) {
-        put(this.KEY_IME_RUTE ,ime_rute);
-    }
+
+    public void setZahtjev(Zahtjev zahtjev){put(KEY_ZAHTJEV,zahtjev);}
+
+    public Zahtjev getZahtjev(){return (Zahtjev) getParseObject(KEY_ZAHTJEV);}
 
     public Ruta() {
 

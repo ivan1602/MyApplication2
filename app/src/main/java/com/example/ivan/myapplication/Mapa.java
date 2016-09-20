@@ -2,6 +2,7 @@ package com.example.ivan.myapplication;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,19 +22,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ivan.myapplication.model.Ruta;
+import com.example.ivan.myapplication.model.Zahtjev;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.SaveCallback;
 
 public class Mapa extends AppCompatActivity {
@@ -44,6 +54,7 @@ public class Mapa extends AppCompatActivity {
     Location location; // location
     double latitude; // latitude
     double longitude;
+    Intent serviceIntent;
 
     @Override
     protected void onPause() {
@@ -72,17 +83,21 @@ public class Mapa extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         routePoints = new ArrayList<LatLng>();
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                .getMap();
+        SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+                setUpMap();
+            }
+        });
 
-        if (map != null) {
-            setUpMap();
-        }
-        prati = (Button)findViewById(R.id.kreni);
+
+        prati = (Button) findViewById(R.id.kreni);
         prati.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInputDialog ();
+                showInputDialog();
             }
         });
 
@@ -91,15 +106,17 @@ public class Mapa extends AppCompatActivity {
             public boolean onMyLocationButtonClick() {
                 map.moveCamera(CameraUpdateFactory.newLatLng(routePoints
                         .get(routePoints.size() - 1)));
+
                 return true;
             }
         };
 
-        stop = ( Button)findViewById(R.id.stop);
+        stop = (Button) findViewById(R.id.stop);
         stop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopService( new Intent(Mapa.this, Prati.class));
+                if (serviceIntent != null)
+                    stopService(serviceIntent);
                 map.clear();
             }
         });
@@ -109,18 +126,19 @@ public class Mapa extends AppCompatActivity {
 
         inf.addAction(Prati.INTENT_ACTION);
         this.registerReceiver(rcv, inf);
-        }
-    private void setUpMap() {
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+    }
 
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },0 );
-        }
-        else {
+    private void setUpMap() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        } else {
 
             map.setMyLocationEnabled(true);
             map.animateCamera(CameraUpdateFactory.zoomTo(10));
         }
     }
+
     private void updateRoute() {
         PolylineOptions p = new PolylineOptions().width(3).color(0xFFEE8888);
         p.addAll(routePoints);
@@ -139,52 +157,45 @@ public class Mapa extends AppCompatActivity {
             }
         }
     }
+
     private void showInputDialog() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Ime ruta");
-        alert.setMessage("Molim Vas unesite ime rute");
+        alert.setTitle("Ruta");
+        alert.setMessage("Odaberite Zahtjev");
 
-        final EditText input = new EditText(this);
-        alert.setView(input);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
+        final ListView listView = new ListView(this);
+        ParseQuery<Zahtjev> query = ParseQuery.getQuery(Zahtjev.class);
 
-                if (value != null && value.trim().length() == 0)
-                {
-                    Context context = getApplicationContext();
-                    CharSequence error = "Niste unijeli ime rute, molim Vas unesite ime rute" + value;
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, error, duration);
-                    toast.show();
-                    showInputDialog();
-                }
-                else
-                {
-                    dodajRutuUBazu(value);
-                }
+
+        alert.setView(listView);
+        final AlertDialog dialog = alert.show();
+        query.findInBackground(new FindCallback<Zahtjev>() {
+            @Override
+            public void done(final List<Zahtjev> objects, ParseException e) {
+                listView.setAdapter(new ArrayAdapter<Zahtjev>(Mapa.this, android.R.layout.simple_list_item_1, objects));
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                        dodajRutuUBazu(objects.get(position));
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.dismiss();
-            }
-        });
-
-        alert.show();
 
     }
-    public void dodajRutuUBazu (String imerute){
+
+    public void dodajRutuUBazu(final Zahtjev zahtjev) {
         final Ruta ruta = new Ruta();
-        ruta.setImeRute(imerute);
+        ruta.setZahtjev(zahtjev);
         ruta.spremi(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Intent i = new Intent(Mapa.this, Prati.class);
-                i.putExtra("id_rute", ruta.getObjectId());
-                startService(i);
+                serviceIntent = new Intent(Mapa.this, Prati.class);
+                serviceIntent.putExtra("id_rute", ruta.getObjectId());
+                startService(serviceIntent);
             }
         });
 

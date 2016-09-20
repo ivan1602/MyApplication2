@@ -15,6 +15,9 @@ public class BaseModel extends ParseObject {
         acl.setReadAccess(ParseUser.getCurrentUser(),true);
         acl.setReadAccess("FeDDkPgPTn",true);
         this.setACL(acl);
-        this.saveInBackground(saveCallback);
+        if(saveCallback!=null)
+            this.saveInBackground(saveCallback);
+        else
+            this.saveInBackground();
     }
 }

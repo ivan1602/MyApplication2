@@ -28,26 +28,21 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class NoviZahtjevi extends AppCompatActivity {
+public class NoviZahtjevi extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     Zahtjev noviZahtjev;
 
     RadioGroup rg;
     RadioButton btn1;
 
-    TextView ime, prezime, rmjesto, mputovanja, vprojekta, datumPola, vrijemePola, datumPovr, vrijemePovr;
+    TextView ime, prezime, rmjesto, mputovanja, vprojekta;
     TextView akontacija, vprijevoza, oaktivnosti, troskovi, obrazlozenje, podnositelj;
 
-    Button predaj;
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    Button predaj, datumPola, vrijemePola, datumPovr, vrijemePovr;
 
 
     @Override
@@ -65,15 +60,16 @@ public class NoviZahtjevi extends AppCompatActivity {
         rmjesto = (TextView) findViewById(R.id.Radno_mjesto);
         mputovanja = (TextView) findViewById(R.id.Mjesto_putovanja);
         vprojekta = (TextView) findViewById(R.id.Voditelj_projekta);
-        datumPovr = (TextView) findViewById(R.id.Datum_povratka);
-        vrijemePovr = (TextView) findViewById(R.id.Vrijeme_povratka);
+        datumPovr = (Button) findViewById(R.id.Datum_povratka);
+        vrijemePovr = (Button) findViewById(R.id.Vrijeme_povratka);
         oaktivnosti = (TextView) findViewById(R.id.Opis_aktivnosti);
         akontacija = (TextView) findViewById(R.id.Akontacija);
         vprijevoza = (TextView) findViewById(R.id.Vrsta_prijevoza);
         troskovi = (TextView) findViewById(R.id.Troskovi);
         obrazlozenje = (TextView) findViewById(R.id.Obrazlozenje);
         podnositelj = (TextView) findViewById(R.id.Podnositelj);
-
+        datumPola = (Button) findViewById(R.id.datumPolaska);
+        vrijemePola = (Button) findViewById(R.id.vrijemePolaska);
 
 
         predaj = (Button) findViewById(R.id.Predaj);
@@ -88,7 +84,8 @@ public class NoviZahtjevi extends AppCompatActivity {
                 noviZahtjev.setIme(ime.getText().toString());
                 noviZahtjev.setPrezime(prezime.getText().toString());
                 noviZahtjev.setMjPutovanja(mputovanja.getText().toString());
-
+                noviZahtjev.setDPolaska(datumPola.getText().toString());
+                noviZahtjev.setVPolaska(vrijemePola.getText().toString());
                 noviZahtjev.setVProjekta(vprojekta.getText().toString());
                 noviZahtjev.setDPovratka(datumPovr.getText().toString());
                 noviZahtjev.setVPovratka(vrijemePovr.getText().toString());
@@ -114,101 +111,82 @@ public class NoviZahtjevi extends AppCompatActivity {
         });
 
 
-
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void showDatePickerDialog (View v)
-    {
+    public void showDatePickerDialog(View v) {
         DialogFragment newDFragment = new DatePickerFragment();
-        newDFragment.show(getSupportFragmentManager(), "datePicker");
 
+        newDFragment.show(getSupportFragmentManager(), "datumPolaska");
 
 
     }
 
-    public void showTimePickerDialog (View v)
-    {
+    public void showTimePickerDialog(View v) {
 
         DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+        newFragment.show(getSupportFragmentManager(), "vrijemePolaska");
 
 
     }
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "NoviZahtjevi Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.ivan.myapplication/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Date date = new Date();
+        ((Button) findViewById(R.id.datumPolaska)).setText("");
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "NoviZahtjevi Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.ivan.myapplication/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
     }
-    public  class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+        String tag;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            tag = this.getTag();
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            Date date = new Date();
-                    ((Button)findViewById(R.id.datumPolaska)).setText();
+
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar c = Calendar.getInstance();
+            c.clear();
+            c.set(year,monthOfYear,dayOfMonth);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+            if (tag.equals("datumPolaska")) {
+                ((Button) getActivity().findViewById(R.id.datumPolaska)).setText(sdf.format(c.getTime()));
+            }
         }
-        // Do something with the date chosen by the user
     }
-    public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
+    public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
-
+        String tag;
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
-
+            tag = getTag();
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
         }
 
+
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            Calendar c = Calendar.getInstance();
+            c.clear();
+            c.set(0,0,0,hourOfDay,minute);
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            if (tag.equals("vrijemePolaska")) {
+                ((Button) getActivity().findViewById(R.id.vrijemePolaska)).setText(sdf.format(c.getTime()));
+            }
         }
     }
 

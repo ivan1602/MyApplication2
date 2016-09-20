@@ -14,11 +14,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.provider.Settings;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.ivan.myapplication.model.Koordinate;
 import com.example.ivan.myapplication.model.Ruta;
@@ -27,14 +31,15 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 
 /**
  * Created by Ivan on 23.6.2016..
  */
-public class Prati extends Service implements LocationListener{
+public class Prati extends Service implements LocationListener {
 
-    public static final String INTENT_ACTION="com.extejljaflija";
+    public static final String INTENT_ACTION = "com.extejljaflija";
     private ArrayList<LatLng> routePoints;
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -55,35 +60,45 @@ public class Prati extends Service implements LocationListener{
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 2000 ; // 5 seconds
+    private static final long MIN_TIME_BW_UPDATES = 2000; // 5 seconds
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public Prati ()
-    {
+    public Prati() {
 
     }
 
     @Override
     public void onDestroy() {
-        //stopUsingGPS();
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            stopSelf();
+        }
+        if (ruta != null) {
+            ruta.setStopRute(Calendar.getInstance().getTime());
+            ruta.spremi(null);
+        }
+        if (locationManager != null)
+            locationManager.removeUpdates(this);
         super.onDestroy();
     }
 
-private Ruta ruta;
+    private Ruta ruta;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         idrute = intent.getExtras().getString("id_rute");
         routePoints = new ArrayList<LatLng>();
-        ParseQuery<Ruta> rutaQuery=ParseQuery.getQuery(Ruta.class);
-        rutaQuery.getInBackground(idrute, new GetCallback<Ruta>() {
+        Ruta ruta = Ruta.createWithoutData(Ruta.class, idrute);
+        ruta.setStartRute(Calendar.getInstance().getTime());
+        ruta.spremi(new SaveCallback() {
             @Override
-            public void done(Ruta object, ParseException e) {
-                if(e==null){
-                    ruta=object;
+            public void done(ParseException e) {
+                if (e != null)
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                else
                     getLocation();
-                }
             }
         });
 
@@ -102,36 +117,28 @@ private Ruta ruta;
             // getting network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled)
-            {
+            if (!isGPSEnabled && !isNetworkEnabled) {
                 showSettingsAlert();
-            }
-            else
-            {
-                if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            } else {
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                     stopSelf();
                 }
 
 
                 this.canGetLocation = true;
-                if (isNetworkEnabled)
-                {
-                   locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                if (isNetworkEnabled) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
                 }
                 // if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled)
-                {
-                    if (location == null)
-                    {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                         Log.d("GPS Enabled", "GPS Enabled");
-                        if (locationManager != null)
-                        {
+                        if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null)
-                            {
+                            if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
                                 sendLocation(latitude, longitude);
@@ -141,18 +148,15 @@ private Ruta ruta;
                 }
             }
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return location;
     }
 
-    public double getLatitude()
-    {
-        if(location != null)
-        {
+    public double getLatitude() {
+        if (location != null) {
             latitude = location.getLatitude();
         }
 
@@ -160,10 +164,8 @@ private Ruta ruta;
         return latitude;
     }
 
-    public double getLongitude()
-    {
-        if(location != null)
-        {
+    public double getLongitude() {
+        if (location != null) {
             longitude = location.getLongitude();
         }
 
@@ -171,14 +173,12 @@ private Ruta ruta;
         return longitude;
     }
 
-    public boolean canGetLocation()
-    {
+    public boolean canGetLocation() {
         return this.canGetLocation;
     }
 
 
-    public void showSettingsAlert()
-    {
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         // Setting Dialog Title
@@ -188,20 +188,16 @@ private Ruta ruta;
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
         // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog,int which)
-            {
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
         });
 
         // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
@@ -216,16 +212,16 @@ private Ruta ruta;
 
     }
 
-    private void sendLocation(double lat, double lng){
-        routePoints.add(new LatLng(lat,lng));
-        Koordinate koor= new Koordinate();
+    private void sendLocation(double lat, double lng) {
+        routePoints.add(new LatLng(lat, lng));
+        Koordinate koor = new Koordinate();
         koor.setLat(lat);
         koor.setLng(lng);
         koor.setId_rute(ruta);
         koor.saveEventually();
         Intent intent = new Intent();
         intent.setAction(INTENT_ACTION);
-        intent.putParcelableArrayListExtra("lokacija",routePoints);
+        intent.putParcelableArrayListExtra("lokacija", routePoints);
         sendBroadcast(intent);
         Log.d("nova lokacija prati", "nova lokacija");
     }
