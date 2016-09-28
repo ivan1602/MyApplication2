@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -115,28 +116,20 @@ public class NoviZahtjevi extends AppCompatActivity implements DatePickerDialog.
 
     public void showDatePickerDialog(View v) {
         DialogFragment newDFragment = new DatePickerFragment();
-
         newDFragment.show(getSupportFragmentManager(), "datumPolaska");
-
-
     }
 
-    public void showTimePickerDialog(View v) {
-
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "vrijemePolaska");
-
-
+    public void showReturnDatePickerDialog (View view){
+        DialogFragment newReturnDFragment = new DatePickerFragment();
+        newReturnDFragment.show(getSupportFragmentManager(), "datumPovratka");
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Date date = new Date();
         ((Button) findViewById(R.id.datumPolaska)).setText("");
+        ((Button)findViewById(R.id.Datum_povratka)).setText("");
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-    }
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         String tag;
@@ -151,7 +144,6 @@ public class NoviZahtjevi extends AppCompatActivity implements DatePickerDialog.
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
-
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             Calendar c = Calendar.getInstance();
@@ -160,8 +152,28 @@ public class NoviZahtjevi extends AppCompatActivity implements DatePickerDialog.
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
             if (tag.equals("datumPolaska")) {
                 ((Button) getActivity().findViewById(R.id.datumPolaska)).setText(sdf.format(c.getTime()));
+            } else if (tag.equals("datumPovratka"))
+            {((Button) getActivity().findViewById(R.id.Datum_povratka)).setText(sdf.format(c.getTime()));
             }
+
         }
+
+    }
+
+
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "vrijemePolaska");
+    }
+
+    public void showRTimePickerDialog (View v){
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "vrijemePovratka");
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
     }
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
@@ -187,7 +199,18 @@ public class NoviZahtjevi extends AppCompatActivity implements DatePickerDialog.
             if (tag.equals("vrijemePolaska")) {
                 ((Button) getActivity().findViewById(R.id.vrijemePolaska)).setText(sdf.format(c.getTime()));
             }
+            else if  (tag.equals("vrijemePovratka")) {
+                ((Button) getActivity().findViewById(R.id.Vrijeme_povratka)).setText(sdf.format(c.getTime()));
+            }
         }
     }
+
+
+
+
+
+
+
+
 
 }
