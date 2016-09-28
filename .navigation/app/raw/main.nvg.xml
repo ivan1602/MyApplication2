@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.Login"/>
+      <point      
+        x = "2644"      
+        y = "52"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.RegisterPage"/>
+      <point      
+        x = "1796"      
+        y = "24"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.PregledBazeActivity"/>
+      <point      
+        x = "52"      
+        y = "24"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.UserChoice"/>
+      <point      
+        x = "2356"      
+        y = "1808"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.Pracenje"/>
+      <point      
+        x = "1948"      
+        y = "1976"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.StatistikaRute"/>
+      <point      
+        x = "1772"      
+        y = "1412"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.PregledZahtjeva"/>
+      <point      
+        x = "1812"      
+        y = "1352"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.NoviZahtjevi"/>
+      <point      
+        x = "1768"      
+        y = "1080"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.AboutThisApp"/>
+      <point      
+        x = "1560"      
+        y = "888"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.Mapa"/>
+      <point      
+        x = "1872"      
+        y = "948"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.ivan.myapplication.PokaziNaKarti"/>
+      <point      
+        x = "1864"      
+        y = "848"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
