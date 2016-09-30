@@ -46,17 +46,18 @@ public class ZahtjevIKarta extends AppCompatActivity {
         Obrazlozenje =(TextView)findViewById(R.id.Description);
         PZahtjeva = (TextView)findViewById(R.id.Person);
        // Odobrio = (TextView)findViewById(R.id.Approved);
-
+        final String idZahtjeva=getIntent().getStringExtra("idZahtjeva");
         pregledKarte = (Button)findViewById(R.id.PregledKarte);
         pregledKarte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent PokaziKartu = new Intent(ZahtjevIKarta.this, PokaziNaKarti.class);
+                PokaziKartu.putExtra("idZahtjeva",idZahtjeva);
                 startActivity(PokaziKartu);
             }
         });
 
-        String idZahtjeva=getIntent().getStringExtra("idZahtjeva");
+
         ParseQuery<Zahtjev> query = ParseQuery.getQuery(Zahtjev.class);
         query.getInBackground(idZahtjeva, new GetCallback<Zahtjev>() {
             @Override

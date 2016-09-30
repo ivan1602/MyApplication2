@@ -12,6 +12,8 @@ import com.parse.SaveCallback;
 public class BaseModel extends ParseObject {
     public void spremi(SaveCallback saveCallback){
         ParseACL acl = new ParseACL();
+        acl.setWriteAccess(ParseUser.getCurrentUser(),true);
+        acl.setWriteAccess("FeDDkPgPTn",true);
         acl.setReadAccess(ParseUser.getCurrentUser(),true);
         acl.setReadAccess("FeDDkPgPTn",true);
         this.setACL(acl);

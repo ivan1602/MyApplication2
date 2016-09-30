@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -90,19 +91,25 @@ public class Prati extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         idrute = intent.getExtras().getString("id_rute");
         routePoints = new ArrayList<LatLng>();
-        Ruta ruta = Ruta.createWithoutData(Ruta.class, idrute);
-        ruta.setStartRute(Calendar.getInstance().getTime());
-        ruta.spremi(new SaveCallback() {
+
+        ParseQuery<Ruta> query = ParseQuery.getQuery(Ruta.class);
+        query.getInBackground(idrute, new GetCallback<Ruta>() {
             @Override
-            public void done(ParseException e) {
-                if (e != null)
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                else
-                    getLocation();
+            public void done(Ruta object, ParseException e) {
+                ruta = object;
+                object.setStartRute(Calendar.getInstance().getTime());
+                object.spremi(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null)
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        else
+                            getLocation();
+                    }
+                });
+
             }
         });
-
-
         return Service.START_STICKY;
     }
 

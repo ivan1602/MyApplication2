@@ -46,7 +46,7 @@ public class PokaziNaKarti extends AppCompatActivity {
         });
 
 
-        idRute = "RhliVIGiUe";
+        idRute = getIntent().getStringExtra("idZahtjeva");
         SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -85,6 +85,7 @@ public class PokaziNaKarti extends AppCompatActivity {
                 if (list.size() > 0) {
                     map.moveCamera(CameraUpdateFactory.newLatLng(list.get(list.size() - 1)));
                     map.animateCamera(CameraUpdateFactory.zoomTo(15));
+                    assert (list.isEmpty() ? null : list.get(0)) != null;
                     map.addMarker(new MarkerOptions().position(list.isEmpty() ? null : list.get(0)).title("Start"));
                     map.addMarker(new MarkerOptions().position(list.isEmpty() ? null : list.get(list.size() - 1)).title("End"));
                 }
